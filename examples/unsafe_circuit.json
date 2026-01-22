@@ -1,0 +1,69 @@
+{
+  "name": "Unsafe Circuit - Non-Certified High Power",
+  "components": [
+    {
+      "id": "adapter1",
+      "type": "adapter",
+      "name": "48V Power Adapter",
+      "voltage_output": 48.0,
+      "current_max": 5.0,
+      "power_max": 240.0
+    },
+    {
+      "id": "dcdc1",
+      "type": "dcdc",
+      "name": "Non-Certified 12V DCDC",
+      "voltage_nominal": 12.0,
+      "current_max": 10.0,
+      "certified": false,
+      "efficiency": 0.90,
+      "protections": []
+    },
+    {
+      "id": "res1",
+      "type": "resistor",
+      "name": "Current Sense 0.1Ohm",
+      "resistance": 0.1,
+      "power_rating": 5.0
+    },
+    {
+      "id": "cap1",
+      "type": "capacitor",
+      "name": "Output Cap 220uF",
+      "capacitance": 0.00022,
+      "voltage_max": 25.0
+    },
+    {
+      "id": "sink1",
+      "type": "sink",
+      "name": "Motor Load",
+      "power_consumption": 100.0,
+      "voltage_required": 12.0,
+      "current_required": 8.33
+    }
+  ],
+  "connections": [
+    {
+      "from": "adapter1",
+      "to": "dcdc1",
+      "type": "power",
+      "resistance": 0.01
+    },
+    {
+      "from": "dcdc1",
+      "to": "sink1",
+      "type": "power",
+      "resistance": 0.01
+    }
+  ],
+  "attachments": [
+    {
+      "passive": "res1",
+      "active": "dcdc1"
+    },
+    {
+      "passive": "cap1",
+      "active": "dcdc1"
+    }
+  ]
+}

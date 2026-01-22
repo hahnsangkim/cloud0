@@ -1,0 +1,67 @@
+{
+  "name": "Simple Safe Circuit",
+  "components": [
+    {
+      "id": "adapter1",
+      "type": "adapter",
+      "name": "12V Power Adapter",
+      "voltage_output": 12.0,
+      "current_max": 1.0,
+      "power_max": 12.0
+    },
+    {
+      "id": "ldo1",
+      "type": "ldo",
+      "name": "5V LDO Regulator",
+      "voltage_nominal": 5.0,
+      "current_max": 1.0,
+      "certified": true,
+      "efficiency": 0.85,
+      "protections": [
+        {
+          "type": "over_current_protection",
+          "threshold_current": 1.2
+        },
+        {
+          "type": "over_voltage_protection",
+          "threshold_voltage": 6.0
+        }
+      ]
+    },
+    {
+      "id": "cap1",
+      "type": "capacitor",
+      "name": "Input Cap 100uF",
+      "capacitance": 0.0001,
+      "voltage_max": 25.0
+    },
+    {
+      "id": "sink1",
+      "type": "sink",
+      "name": "MCU Load",
+      "power_consumption": 2.5,
+      "voltage_required": 5.0,
+      "current_required": 0.5
+    }
+  ],
+  "connections": [
+    {
+      "from": "adapter1",
+      "to": "ldo1",
+      "type": "power",
+      "resistance": 0.01
+    },
+    {
+      "from": "ldo1",
+      "to": "sink1",
+      "type": "power",
+      "resistance": 0.01
+    }
+  ],
+  "attachments": [
+    {
+      "passive": "cap1",
+      "active": "ldo1"
+    }
+  ]
+}

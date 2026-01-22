@@ -1,0 +1,106 @@
+{
+  "name": "Protected High Power Circuit",
+  "components": [
+    {
+      "id": "adapter1",
+      "type": "adapter",
+      "name": "48V Power Adapter",
+      "voltage_output": 48.0,
+      "current_max": 5.0,
+      "power_max": 240.0
+    },
+    {
+      "id": "pmu1",
+      "type": "pmu",
+      "name": "Certified PMU with Protections",
+      "voltage_nominal": 12.0,
+      "current_max": 10.0,
+      "certified": true,
+      "efficiency": 0.92,
+      "protections": [
+        {
+          "type": "over_current_protection",
+          "threshold_current": 11.0,
+          "response_time": 0.001
+        },
+        {
+          "type": "over_voltage_protection",
+          "threshold_voltage": 15.0,
+          "response_time": 0.001
+        },
+        {
+          "type": "over_temperature_protection",
+          "threshold_temperature": 125.0
+        },
+        {
+          "type": "current_limit",
+          "threshold_current": 10.5
+        }
+      ]
+    },
+    {
+      "id": "fuse1",
+      "type": "ic",
+      "name": "10A Fuse IC",
+      "certified": true,
+      "protections": [
+        {
+          "type": "fuse",
+          "threshold_current": 10.0
+        }
+      ]
+    },
+    {
+      "id": "cap1",
+      "type": "capacitor",
+      "name": "Input Cap 470uF",
+      "capacitance": 0.00047,
+      "voltage_max": 63.0
+    },
+    {
+      "id": "cap2",
+      "type": "capacitor",
+      "name": "Output Cap 1000uF",
+      "capacitance": 0.001,
+      "voltage_max": 25.0
+    },
+    {
+      "id": "sink1",
+      "type": "sink",
+      "name": "Motor Load",
+      "power_consumption": 100.0,
+      "voltage_required": 12.0,
+      "current_required": 8.33
+    }
+  ],
+  "connections": [
+    {
+      "from": "adapter1",
+      "to": "fuse1",
+      "type": "power",
+      "resistance": 0.01
+    },
+    {
+      "from": "fuse1",
+      "to": "pmu1",
+      "type": "power",
+      "resistance": 0.01
+    },
+    {
+      "from": "pmu1",
+      "to": "sink1",
+      "type": "power",
+      "resistance": 0.01
+    }
+  ],
+  "attachments": [
+    {
+      "passive": "cap1",
+      "active": "pmu1"
+    },
+    {
+      "passive": "cap2",
+      "active": "pmu1"
+    }
+  ]
+}
